@@ -78,3 +78,5 @@ I was more familiar with GraphQL and backend work though and set up cool stuff l
 AWS costs can rack up and that is why I ended up with Northflank and Supabase. These were free alternatives that were honestly much easier to use than I expected.
 
 Be okay with imperfection when building personal side projects. I can get caught up with perfection and waste a lot of time. I realize I'm a lot happier when I get something working no matter how many corners I cut. It is also easier to tackle them afterwards when I know I have a working, validated project rather than before.
+
+You might have noticed that I don't have too many commits. This is a copy of the private version of the project to protect myself from any bad/revealing commits I may have made.
