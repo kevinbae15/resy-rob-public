@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./backend-dist",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./setup/**/*.ts",
+    "../common/**/*.ts",
+  ],
+  "types": [
+    "node"
+  ]
+}

@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: resy-rob
+      POSTGRES_USER: rob
+      POSTGRES_PASSWORD: password
+    ports:
+      - "45432:5432"
+    volumes:
+      - ./docker/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+  backend:
+    image: 677355067586.dkr.ecr.us-east-2.amazonaws.com/resy-rob-backend:${IMAGE_TAG}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - NODE_OPTIONS=${NODE_OPTIONS}
+      - RESY_AUTH_KEY=${RESY_AUTH_KEY}
+      - POSTGRES_URI=${POSTGRES_URI}
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_LAMBDA_ARN=${AWS_LAMBDA_ARN}
+      - AWS_ROLE_ARN=${AWS_ROLE_ARN}
+      - AWS_KMS_ARN=${AWS_KMS_ARN}
+      - USER_ACCESS_PASSWORDS=${USER_ACCESS_PASSWORDS}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}

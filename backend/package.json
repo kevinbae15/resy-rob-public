@@ -1,0 +1,52 @@
+{
+  "name": "resy-rob-backend",
+  "scripts": {
+    "prettier": "prettier --write --ignore-path ../prettierignore .",
+    "compile": "tsc --project tsconfig.json && cp ./src/schema/schema.graphql ./backend-dist/backend/src/schema/schema.graphql",
+    "dev": "ts-node-dev index",
+    "migrate": "ts-node ./src/db/migrate.ts",
+    "migrate-prod": "ts-node ./src/db/migrate.ts production",
+    "generate-db-types": "npx kysely-codegen --dialect postgres --out-file src/db/db.d.ts",
+    "deploy": "npm run compile && . ./deploy-service.sh"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.9.5",
+    "@graphql-tools/schema": "^9.0.19",
+    "@graphql-tools/utils": "^9.2.1",
+    "apollo-datasource": "^3.3.2",
+    "apollo-server-errors": "^3.3.1",
+    "aws-sdk": "^2.1535.0",
+    "axios": "^1.3.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
+    "jsonwebtoken": "^9.0.2",
+    "kysely": "^0.27.2",
+    "kysely-codegen": "^0.11.0",
+    "kysely-migration-cli": "^0.2.3",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "nodemailer": "^6.9.1",
+    "pg": "^8.11.3",
+    "prompts": "^2.4.2",
+    "querystring": "^0.2.1",
+    "random-useragent": "^0.5.0",
+    "readline": "^1.3.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.11.0",
+    "@types/pg": "^8.10.9",
+    "@types/prompts": "^2.4.9",
+    "@types/random-useragent": "^0.3.3",
+    "prettier": "^3.1.1",
+    "ts-migrate": "^0.1.35"
+  }
+}

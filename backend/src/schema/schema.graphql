@@ -1,0 +1,82 @@
+directive @requireAccess on FIELD_DEFINITION
+directive @requireResyAccount on FIELD_DEFINITION
+directive @requireServiceAccess on FIELD_DEFINITION
+
+scalar Void
+
+type Restaurant {
+  id: ID!
+  name: String!
+  priceRange: Int!
+  location: String!
+  slug: String!
+  image: String
+  minPartySize: Int!
+  maxPartySize: Int!
+}
+
+enum ReservationSnipeStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+type ReservationSnipe {
+  id: ID!
+  city: String!
+  restaurant: Restaurant!
+  reservationDate: String!
+  snipeTime: String!
+  partySize: Int!
+  preferredTimes: [String!]
+  preferredSeatType: String
+  status: ReservationSnipeStatus!
+  # "We can figure this out later"
+  # reservationDetails: Reservation
+}
+
+input ScheduleReservationSnipeInput {
+  # TODO probably dont need city if we provide restaurant id
+  city: String!
+  restaurantId: ID!
+  reservationDate: String!
+  snipeTime: String!
+  partySize: Int!
+  preferredTimes: [String!]!
+  "Must match exactly as the restaurants seat type"
+  preferredSeatType: String
+}
+
+type ResyAccount {
+  name: String!
+  token: String!
+  hasPaymentMethod: Boolean!
+}
+
+type ResyRobAccess {
+  token: String!
+  tokenExpiresAt: String
+}
+
+input GetRestaurantFilter {
+  city: String
+  name: String!
+}
+
+type Query {
+  ping: String
+  getRestaurants(filter: GetRestaurantFilter!): [Restaurant!]! @requireAccess
+}
+
+type Mutation {
+  gainAccessToRob(password: String!): ResyRobAccess!
+  signIntoResyAccount(email: String!, password: String!): ResyAccount!
+    @requireAccess
+  scheduleReservationSnipe(input: ScheduleReservationSnipeInput!): ID!
+    @requireAccess
+    @requireResyAccount
+  setReservationTokenOnReservationSnipe(
+    id: ID!
+    reservationToken: String!
+  ): Void @requireServiceAccess
+}

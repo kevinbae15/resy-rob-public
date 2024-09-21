@@ -1,0 +1,28 @@
+# Use a base Node.js image
+FROM node:18
+
+WORKDIR /app
+
+RUN mkdir -p /app/backend
+
+COPY ./backend/package*.json /app/backend
+COPY ./backend/tsconfig.json /app/backend
+COPY ./tsconfig.json /app
+
+WORKDIR /app/backend
+
+RUN npm install
+
+COPY ./backend/src/ /app/backend/src/
+COPY ./backend/setup/ /app/backend/setup/
+COPY ./backend/index.ts /app/backend/index.ts
+COPY ./common/ /app/common/
+
+RUN npm run compile
+RUN rm -rf /app/backend/src/
+RUN rm -rf /app/backend/setup/
+RUN rm -f /app/backend/index.ts
+RUN rm -rf /app/common/
+
+EXPOSE 4000
+CMD ["node", "/app/backend/backend-dist/backend/index.js"]

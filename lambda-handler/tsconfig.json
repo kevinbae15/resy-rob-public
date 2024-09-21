@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./lambda-dist",
+    "typeRoots": [
+      "./node_modules/@types",
+      "../node_modules/@types"
+    ]
+  },
+  "include": [
+    "./lib/**/*.ts",
+    "./bot/**/*.ts",
+    "./utils/**/*.ts",
+    "../common/**/*.ts",
+  ],
+  "types": [
+    "node"
+  ]
+}
